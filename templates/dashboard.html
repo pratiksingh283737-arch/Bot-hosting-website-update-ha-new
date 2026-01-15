@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans flex flex-col min-h-screen">
+
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center text-2xl font-bold text-gray-800">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>UptimePinger
+            </a>
+            <div id="last-updated" class="text-sm text-gray-600 hidden md:block">Connecting...</div>
+        </nav>
+    </header>
+
+    <main class="flex-grow container mx-auto px-6 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Your Bot Dashboard</h1>
+            <p class="text-gray-600">Save this page link to check status later.</p>
+        </div>
+        <div class="url-list space-y-4"></div>
+    </main>
+
+    <style>
+        .status { padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; color: white; width: 120px; text-align: center; }
+        .status.live { background-color: #22c55e; }
+        .status.down { background-color: #ef4444; }
+        .status.pending { background-color: #eab308; color: #fff; }
+        .status.waiting { background-color: #a0aec0; }
+    </style>
+
+    <script>
+        const bots = {{ bots_for_this_page | tojson }};
+        const verificationMap = {{ verification_map | default({}) | tojson }};
+        
+        function createInitialList() {
+            const urlList = document.querySelector('.url-list');
+            if (Object.keys(bots).length === 0) {
+                urlList.innerHTML = '<div class="bg-white p-6 rounded-lg shadow text-center text-gray-500">No bots found.</div>';
+                return;
+            }
+
+            Object.keys(bots).forEach(name => {
+                const url = bots[name];
+                const isVerified = verificationMap[url] !== false; 
+
+                let initialStatusHTML = '<div class="status waiting">WAITING</div>';
+                let detailsHTML = 'Waiting for check...';
+
+                if (!isVerified) {
+                    initialStatusHTML = '<div class="status pending"><i class="fas fa-clock"></i> PENDING</div>';
+                    detailsHTML = '<span class="text-yellow-600">Payment Verification Pending</span>';
+                }
+
+                const html = `
+                    <div class="url-item bg-white p-5 rounded-lg shadow-md flex items-center justify-between" data-url="${url}" data-verified="${isVerified}">
+                        <div class="url-info">
+                            <span class="font-bold text-lg text-gray-800">${name}</span>
+                            <div class="url-details text-sm text-gray-500 mt-1">${detailsHTML}</div>
+                            <a href="${url}" target="_blank" class="text-xs text-blue-400 hover:underline truncate block max-w-xs">${url}</a>
+                        </div>
+                        <div class="status-box ml-4 flex-shrink-0">${initialStatusHTML}</div>
+                    </div>
+                `;
+                urlList.innerHTML += html;
+            });
+        }
+
+        function updateStatuses() {
+            fetch('/status').then(r => r.json()).then(data => {
+                if (!data.statuses) return;
+                
+                document.querySelectorAll('.url-item').forEach(item => {
+                    const url = item.dataset.url;
+                    const isVerified = item.dataset.verified === 'true';
+
+                    if (!isVerified) return;
+
+                    const statusData = data.statuses[url];
+                    if (!statusData) return;
+
+                    const detailsEl = item.querySelector('.url-details');
+                    const statusBox = item.querySelector('.status-box');
+                    let timeStr = statusData.timestamp ? new Date(statusData.timestamp).toLocaleTimeString() : "";
+                    
+                    if (statusData.status === 'down') {
+                        detailsEl.innerHTML = `<span class="text-red-500"><i class="fas fa-exclamation-triangle"></i> Error: ${statusData.error}</span> (${timeStr})`;
+                        statusBox.innerHTML = '<div class="status down">DOWN</div>';
+                    } else {
+                        detailsEl.innerText = `Last Ping: ${timeStr}`;
+                        statusBox.innerHTML = '<div class="status live">ONLINE</div>';
+                    }
+                });
+                document.getElementById('last-updated').innerText = `Updated: ${new Date().toLocaleTimeString()}`;
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            createInitialList();
+            updateStatuses();
+            setInterval(updateStatuses, 5000);
+        });
+    </script>
+</body>
+</html>
