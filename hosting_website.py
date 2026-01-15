@@ -18,15 +18,15 @@ lock = Lock()
 
 # --- SECURITY & CONFIG ---
 # Security key zaroori hai login session ke liye
-app.secret_key = os.environ.get("SECRET_KEY", "change_this_to_random_string")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123") 
+app.secret_key = os.environ.get("ytryhde6ugf", "change_this_to_random_string")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "pratik12345) 
 
 DATA_FILE = 'customers.json'
 STATUS_FILE = 'ping_statuses.json'
 
 # --- TELEGRAM SETTINGS (Render Environment Variables) ---
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN") 
-TG_CHAT_ID = os.environ.get("TG_CHAT_ID")      
+TG_BOT_TOKEN = 8390715031:AAHk8gik0anp4iKyl42o_lHlLJJ482-L8R0 
+TG_CHAT_ID = os.environ.get("8541572102")      
 
 ALL_CUSTOMERS_BOTS = {}
 
