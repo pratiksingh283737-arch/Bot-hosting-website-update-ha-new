@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uptime Pinger - Professional Bot Hosting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .url-list { list-style: none; padding: 0; }
+        .url-item { background-color: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 1rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+        .status { padding: 0.3rem 0.6rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; color: white; width: 80px; text-align: center; }
+        .status.live { background-color: #22c55e; }
+        .status.waiting { background-color: #a0aec0; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="flex items-center text-2xl font-bold text-gray-800">
+                <i class="fas fa-server text-blue-600 mr-2"></i>UptimePinger
+            </a>
+            <div class="space-x-4">
+                <a href="#pricing" class="text-gray-600 hover:text-blue-600 font-medium">Pricing</a>
+                <a href="/add-bot" class="px-5 py-2.5 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <main class="container mx-auto px-6 py-20 text-center">
+        <h1 class="text-5xl font-extrabold text-gray-900 mb-6 leading-tight">Keep Your Telegram Bots <br><span class="text-blue-600">Alive 24/7</span></h1>
+        <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">The most reliable uptime monitoring service. Hosting made simple.</p>
+        <a href="#pricing" class="px-8 py-4 bg-gray-900 text-white text-lg font-semibold rounded-lg hover:bg-gray-800 transition shadow-lg">View Plans</a>
+    </main>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Choose Your Plan</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Plan 1: Starter -->
+                <div class="bg-gray-50 rounded-2xl p-8 border hover:shadow-xl transition relative">
+                    <h3 class="text-xl font-bold text-gray-700">Starter</h3>
+                    <p class="text-4xl font-bold text-gray-900 my-4">₹29<span class="text-sm text-gray-500 font-normal">/month</span></p>
+                    <p class="text-gray-500 mb-6 text-sm">Basic uptime.</p>
+                    <ul class="space-y-3 mb-8 text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Keeps Bot Alive</li>
+                        <li><i class="fas fa-exclamation-circle text-yellow-500 mr-2"></i>~10 Hours Online/Day</li>
+                        <li><i class="fas fa-times text-red-400 mr-2"></i>Standard Support</li>
+                    </ul>
+                    <a href="/add-bot" class="block w-full py-3 bg-white border border-gray-300 text-gray-700 font-bold rounded-lg text-center hover:bg-gray-100">Select Starter</a>
+                </div>
+
+                <!-- Plan 2: Pro (Best Value) -->
+                <div class="bg-white rounded-2xl p-8 border-2 border-blue-600 shadow-2xl relative transform md:-translate-y-4">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+                    <h3 class="text-xl font-bold text-blue-600">Pro Plan</h3>
+                    <p class="text-4xl font-bold text-gray-900 my-4">₹49<span class="text-sm text-gray-500 font-normal">/month</span></p>
+                    <p class="text-gray-500 mb-6 text-sm">Most recommended.</p>
+                    <ul class="space-y-3 mb-8 text-gray-700">
+                        <li><i class="fas fa-check-circle text-blue-600 mr-2"></i><strong>24/7 Guaranteed Online</strong></li>
+                        <li><i class="fas fa-bolt text-blue-600 mr-2"></i>Fast 2-Min Pings</li>
+                        <li><i class="fas fa-headset text-blue-600 mr-2"></i>Priority Support</li>
+                    </ul>
+                    <a href="/add-bot" class="block w-full py-3 bg-blue-600 text-white font-bold rounded-lg text-center hover:bg-blue-700 shadow-md">Choose Pro</a>
+                </div>
+
+                <!-- Plan 3: Ultra -->
+                <div class="bg-gray-50 rounded-2xl p-8 border hover:shadow-xl transition">
+                    <h3 class="text-xl font-bold text-purple-600">Ultra Saver</h3>
+                    <p class="text-4xl font-bold text-gray-900 my-4">₹79<span class="text-sm text-gray-500 font-normal">/2 months</span></p>
+                    <p class="text-gray-500 mb-6 text-sm">Best long-term value.</p>
+                    <ul class="space-y-3 mb-8 text-gray-600">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i><strong>2 Months Access</strong></li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>24/7 Guaranteed Online</li>
+                        <li><i class="fas fa-star text-purple-500 mr-2"></i>VIP Support</li>
+                    </ul>
+                    <a href="/add-bot" class="block w-full py-3 bg-purple-600 text-white font-bold rounded-lg text-center hover:bg-purple-700">Select Ultra</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8 border-t mt-12">
+        <div class="container mx-auto px-6 text-center text-gray-500">
+            <p>&copy; 2024 UptimePinger.</p>
+        </div>
+    </footer>
+</body>
+</html>
